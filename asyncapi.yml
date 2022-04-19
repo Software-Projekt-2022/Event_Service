@@ -1,0 +1,347 @@
+asyncapi: 2.3.0
+info:
+  title: 'CyberCity Event Bus'
+  version: 0.0.2
+  description: 'Dieser Service kümmert sich um den Kommunikationsweg der einzelnen Microservices.
+                Umgesetzt wird diese Funktionalität mit RabbitMQ.
+                Ein Event wird immer von einem Event-Wrapper umschlossen.
+                Im Nachfolgenden werden alle Events ohne diesen Wrapper aufgelistet.
+                Die Beispiele enthalten jedoch immer den Wrapper.
+                Außdem wird der Event-Wrapper einzeln und mit Beschreibung in dem Abschnitt "Messages"
+                weiter unten auf der Seite als "#1" aufgelistet.
+                Nur Events, die von dem Wrapper umschlossen werden, dürfen in den Event Bus geschrieben werden.'
+channels:
+  breaking_news_created:
+    description: 'Dieses Event wird gesendet, wenn eine Eilmeldung erstellt wurde,
+                  die in den Microsevices angezeigt werden soll.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/breaking_news_created'
+  air_quality_warning:
+    description: 'Dieses Event wird gesendet, wenn eine Warnung zur Luftverschmutzung abgegeben wurde.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/air_quality_warning'
+  daily_cultural_events:
+    description: 'Dieses Event wird gesendet, wenn die täglichen kulturellen Veranstaltungen feststehen.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/daily_cultural_events'
+  admin_message:
+    description: 'Dieses Event wird gesendet, wenn ein Systemadministrator eine Nachricht an alle Microservices sendet.
+                  Das "event_origin"-Feld des Event-Wrappers kann bei diesem Event ignoriert werden.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/admin_message'
+  customer_created:
+    description: 'Dieses Event wird gesendet, wenn ein Benutzer im System registriert wurde.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/customer_created'
+  customer_authorized:
+    description: 'Dieses Event wird gesendet, wenn ein Benutzer sich bei dem Authentifizierungs-Microservice angemeldet hat.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/customer_authorized'
+  customer_deleted:
+    description: 'Dieses Event wird gesendet, wenn ein Benutzer aus dem System gelöscht wird.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/customer_deleted'
+  contract_deleted:
+    subscribe:
+      message:
+        $ref: '#/components/messages/contract_deleted'
+  contract_received:
+    subscribe:
+      message:
+        $ref: '#/components/messages/contract_received'
+  crew_member_created:
+    subscribe:
+      message:
+        $ref: '#/components/messages/crew_member_created'
+  crew_member_removed:
+    subscribe:
+      message:
+        $ref: '#/components/messages/crew_member_removed'
+  health_expert_created:
+    subscribe:
+      message:
+        $ref: '#/components/messages/health_expert_created'
+  health_expert_removed:
+    subscribe:
+      message:
+        $ref: '#/components/messages/health_expert_removed'
+  cultural_event_started:
+    description: 'Dieses Event wird gesendet, wenn eine Veranstaltung begonnen hat.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/cultural_event_started'
+components:
+  messages:
+    event_wrapper:
+      payload:
+        type: object
+        properties:
+          event_type:
+            type: string
+            description: 'Enthält die Art des Events.
+                          Dieses Feld muss den Namen eines Events enthalten
+                          und kann von empfangenden Microservices verwendet werden, um die Art des Events zu erkennen.'
+          event_origin:
+            type: string
+            format: <typ>.<name>
+            description: 'Enthält den Absender des Events.
+                          Dieses Feld muss den Namen eines Microservices enthalten (z. B. "microservice.krankenhaus")
+                          und kann von empfangenden Microservices verwendet werden, um den Absender des Events zu erkennen.'
+          event_time:
+            type: string
+            format: yyyy-MM-dd HH:mm:ss (ISO 8601)
+            description: Zeitpunkt der Eilmeldung, an dem diese ursprünglich erstellt worden ist. (Falls verspätete Zustellung.)
+          content:
+            type: object
+            description: 'Beinhaltet das eigentliche Event.'
+    breaking_news_created:
+      payload:
+        type: object
+        properties:
+          message:
+            type: string
+            description: 'Inhalt der Eilmeldung.'
+        example: {
+          event_type: 'breaking_news_created',
+          event_origin: 'microservice.krankenhaus',
+          event_time: '2013-05-13 12:58:26',
+          content: {
+            message: 'Das ist eine Eilmeldung'
+          }
+        }
+    air_quality_warning:
+      payload:
+        type: object
+        properties:
+          message:
+            type: string
+            description: 'Die Nachricht, die bei der Warnung angezeigt wird.'
+          pollution_type:
+            type: string
+            description: 'Enthält die Art der Luftverschmutzung und wird von dem sendenden Microservice bestimmt.
+                          Diese dient hauptsächlich zur programmatischen bestimmung der Art der Luftverschmutzung.
+                          Beispiel: Pollen oder Feinstaub.'
+          pollution_level:
+            type: string
+            description: 'Grad der Luftverschmutzung.
+                          Die Einheit und der Wertebereich wird von dem sendenden Microservice bestimmt und ist abhängig von
+                          der Art der Luftverschmutzung. Die Einheit sollte auch in diesem Feld enthalten sein.'
+        example: {
+          event_type: 'air_quality_warning',
+          event_origin: 'microservice.umwelt',
+          event_time: '2013-05-13 12:58:26',
+          content: {
+            message: 'Achtung, es liegt viel Feinstaub in der Luft!',
+            pollution_type: 'Feinstaub',
+            pollution_level: '20 µg/m³'
+          }
+        }
+    daily_cultural_events:
+      payload:
+        type: object
+        properties:
+          name:
+            type: string
+            description: 'Name der Veranstaltung.'
+          location:
+            type: string
+            description: 'Name des Ortes der Veranstaltung.'
+          address:
+            type: string
+            description: 'Adresse der Veranstaltung.'
+          time_start:
+            type: string
+            format: yyyy-MM-dd HH:mm:ss (ISO 8601)
+            description: 'Start der Veranstaltung.'
+          time_end:
+            type: string
+            format: yyyy-MM-dd HH:mm:ss (ISO 8601)
+            description: 'Ende der Veranstaltung.'
+        example: {
+          event_type: 'daily_cultural_events',
+          event_origin: 'microservice.kultur',
+          event_time: '2013-05-13 12:58:26',
+          content: [
+            {
+              name: 'Angel-Turnier',
+              location: 'Park',
+              address: 'Hauptstr. 123',
+              time_start: '2022-05-13 12:00:00',
+              time_end: '2022-05-13 18:00:00'
+            },
+            {
+              name: 'Insektenfang-Turnier',
+              location: 'Park',
+              address: 'Hauptstr. 123',
+              time_start: '2022-05-13 12:00:00',
+              time_end: '2022-05-13 18:00:00'
+            }
+          ]
+        }
+    admin_message:
+      payload:
+        type: object
+        properties:
+          message:
+            type: string
+            description: 'Inhalt der Nachricht.'
+        example: {
+          event_type: 'admin_message',
+          event_origin: 'system.admin',
+          event_time: '2013-05-13 12:58:26',
+          content: {
+            message: 'Das ist eine Nachricht vom Admin :)'
+          }
+        }
+    customer_created:
+      payload:
+        type: object
+        properties:
+          first_name:
+            type: string
+            description: 'Vorname.'
+          last_name:
+            type: string
+            format: email
+            description: 'Nachname.'
+          email:
+            type: string
+            format: email
+            description: 'Email'
+          date_of_birth:
+            type: string
+            format: YYYY-MM-DD (iso 8601)
+            description: 'Geburtsdatum.'
+          address:
+            type: string
+            description: 'Adresse.'
+        example: {
+          event_type: 'customer_created',
+          event_origin: 'microservice.authentifizierung',
+          event_time: '2013-05-13 12:58:26',
+          content: {
+            first_name: 'Uwe',
+            last_name: 'Uwe',
+            email: 'uwe@email.de',
+            date_of_birth: '2013-05-13',
+            address: 'Hauptstr. 123'
+          }
+        }
+    customer_authorized:
+      payload:
+        type: object
+        properties:
+          id:
+            type: string
+            description: 'ID des Benutzers in der Datenbank. Diese kann für Queries verwendet werden.'
+          session:
+            type: string
+            description: 'Session-Token des angeldeten Benutzers.'
+          first_name:
+            type: string
+            description: 'Vorname.'
+          last_name:
+            type: string
+            format: email
+            description: 'Nachname.'
+          email:
+            type: string
+            format: email
+            description: 'Email.'
+        example: {
+          event_type: 'customer_authorized',
+          event_origin: 'microservice.authentifizierung',
+          event_time: '2013-05-13 12:58:26',
+          content: {
+            id: '70531',
+            session: 'abcdefghijklmnopqrstuvwxyz',
+            first_name: 'Uwe',
+            last_name: 'Uwe',
+            email: 'uwe@email.de'
+          }
+        }
+    customer_deleted:
+      payload:
+        type: object
+        properties:
+          id:
+            type: string
+            description: 'Ehemalige ID des gelöschten Benutzers in der Datenbank.'
+          first_name:
+            type: string
+            description: 'Vorname des gelöschten Benutzers.'
+          last_name:
+            type: string
+            format: email
+            description: 'Nachname des gelöschten Benutzers.'
+          email:
+            type: string
+            format: email
+            description: 'Email des gelöschten Benutzers.'
+        example: {
+          event_type: 'customer_authorized',
+          event_origin: 'microservice.authentifizierung',
+          event_time: '2013-05-13 12:58:26',
+          content: {
+            id: '70531',
+            first_name: 'Uwe',
+            last_name: 'Uwe',
+            email: 'uwe@email.de'
+          }
+        }
+    contract_deleted:
+      payload:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID
+    contract_received:
+      payload:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID
+    crew_member_created:
+      payload:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID
+    crew_member_removed:
+      payload:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID
+    health_expert_created:
+      payload:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID
+    health_expert_removed:
+      payload:
+        type: object
+        properties:
+          id:
+            type: integer
+            description: ID
+    cultural_event_started:
+      payload:
+        type: object
+        properties:
+          name:
+            type: string
+            description: 'Name der Veranstaltung.'
