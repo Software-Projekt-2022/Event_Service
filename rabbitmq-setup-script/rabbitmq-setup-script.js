@@ -57,33 +57,89 @@ amqp.connect('amqp://localhost', (conn_err, connection) =>
             throw ch_err;
         }
 
-        //Clear bindings
         console.log("Clearing bindings...");
-        microservices.forEach(name =>
+        clearBindings(channel, () =>
         {
-            microservices.forEach(name2 =>
+            console.log("Creating bindings...");
+            createBindings(channel, () =>
             {
-                event_types.forEach(event_type =>
-                {
-                    channel.unbindQueue(`microservice.${name}`, `publish_event.${name2}`, event_type);
-                });
+                console.log("Done");
+                connection.close();
             });
         });
-
-        //Create bindings
-        console.log("Creating bindings...");
-        microservices.forEach(name =>
-        {
-            input_file[name].from_microservices.forEach(from_ms_name =>
-            {
-                input_file[name].receive_events.forEach(receive_ev_name =>
-                {
-                    channel.bindQueue(`microservice.${name}`, `publish_event.${from_ms_name}`, receive_ev_name);
-                });
-            });
-        });
-
-        console.log("Done");
-        connection.close();
     });
 });
+
+function clearBindings(channel, callback)
+{
+    var count = microservices.length * microservices.length * event_types.length;
+    const max = count;
+    microservices.forEach(name =>
+    {
+        microservices.forEach(name2 =>
+        {
+            event_types.forEach(event_type =>
+            {
+                channel.unbindQueue(`microservice.${name}`, `publish_event.${name2}`, event_type, null, (err, ok) =>
+                {
+                    if(err)
+                    {
+                        throw err;
+                    }
+                    count--;
+                    if(count % 100 == 0)
+                    {
+                        console.log('%d%', Math.round((100.0 - count / max * 100.0)));
+                    }
+                    if(count == 0)
+                    {
+                        callback();
+                    }
+                });
+            });
+        });
+    });
+}
+
+function processInputData(callback)
+{
+    microservices.forEach(name =>
+    {
+        input_file[name].forEach(entry =>
+        {
+            entry.event_types.forEach(ev_type =>
+            {
+                callback(name, entry.from, ev_type);
+            });
+        });
+    });
+}
+
+function createBindings(channel, callback)
+{
+    var count = 0;
+    processInputData((ms_name, ms_from, ev_type) =>
+    {
+        count++;
+    });
+    const max = count;
+    processInputData((ms_name, ms_from, ev_type) =>
+    {
+        channel.bindQueue(`microservice.${ms_name}`, `publish_event.${ms_from}`, ev_type, null, (err, ok) =>
+        {
+            if(err)
+            {
+                throw err;
+            }
+            count--;
+            if(count % 100 == 0)
+            {
+                console.log('%d%', Math.round((100.0 - count / max * 100.0)));
+            }
+            if(count == 0)
+            {
+                callback();
+            }
+        });
+    });
+}
