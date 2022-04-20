@@ -1,7 +1,7 @@
 asyncapi: 2.3.0
 info:
   title: 'CyberCity Event Bus'
-  version: 0.0.2
+  version: 0.0.3
   description: 'Dieser Service kümmert sich um den Kommunikationsweg der einzelnen Microservices.
                 Umgesetzt wird diese Funktionalität mit RabbitMQ.
                 Ein Event wird immer von einem Event-Wrapper umschlossen.
@@ -17,22 +17,28 @@ channels:
     subscribe:
       message:
         $ref: '#/components/messages/breaking_news_created'
+  error_event:
+    description: 'Dieses Event wird als Antwort gesendet, wenn bei der Validierung eines Events ein Fehler aufgetreten ist.
+                  Dieses Event wird über eine spezielle Exchange gesendet, die extra für Error-Events erstellt worden ist.'
+    subscribe:
+      message:
+        $ref: '#/components/messages/error_event'
   air_quality_warning:
     description: 'Dieses Event wird gesendet, wenn eine Warnung zur Luftverschmutzung abgegeben wurde.'
     subscribe:
       message:
-        $ref: '#/components/messages/air_quality_warning'
+        $ref: '#/components/messages/air_quality_warning_issued'
   daily_cultural_events:
     description: 'Dieses Event wird gesendet, wenn die täglichen kulturellen Veranstaltungen feststehen.'
     subscribe:
       message:
-        $ref: '#/components/messages/daily_cultural_events'
+        $ref: '#/components/messages/daily_cultural_events_published'
   admin_message:
     description: 'Dieses Event wird gesendet, wenn ein Systemadministrator eine Nachricht an alle Microservices sendet.
                   Das "event_origin"-Feld des Event-Wrappers kann bei diesem Event ignoriert werden.'
     subscribe:
       message:
-        $ref: '#/components/messages/admin_message'
+        $ref: '#/components/messages/admin_message_broadcast'
   customer_created:
     description: 'Dieses Event wird gesendet, wenn ein Benutzer im System registriert wurde.'
     subscribe:
@@ -83,6 +89,13 @@ components:
       payload:
         type: object
         properties:
+          event_id:
+            type: string
+            description: 'Enthält die ID des Events.
+                          Jedes Event muss eine einzigartige ID haben.
+                          Um zu gewährleisten, dass jedes Event-ID auch über alle Microservices einzig ist,
+                          sollte jede ID einen Präfix haben, der für jeden Microservice einzigartig ist,
+                          wie bspw. ein Abkürzung des Namens.'
           event_type:
             type: string
             description: 'Enthält die Art des Events.
@@ -109,6 +122,7 @@ components:
             type: string
             description: 'Inhalt der Eilmeldung.'
         example: {
+          event_id: 'AUT-70539',
           event_type: 'breaking_news_created',
           event_origin: 'microservice.krankenhaus',
           event_time: '2013-05-13 12:58:26',
@@ -116,7 +130,25 @@ components:
             message: 'Das ist eine Eilmeldung'
           }
         }
-    air_quality_warning:
+    error_event:
+      payload:
+        description: Dieses Event beinhaltet eine Kopie des ursprünglichen fehlerhaften Events inklusive Event-Wrapper.
+        example: {
+          event_id: 'KRA-70539',
+          event_type: 'error_event',
+          event_origin: 'microservice.krankenhaus',
+          event_time: '2013-05-13 12:58:26',
+          content: {
+            event_id: 'UMW-64376',
+            event_type: 'breaking_news_created',
+            event_origin: 'microservice.umwelt',
+            event_time: '2013-05-13 12:58:26',
+            content: {
+              messaggge: 57
+            }
+          }
+        }
+    air_quality_warning_issued:
       payload:
         type: object
         properties:
@@ -134,6 +166,7 @@ components:
                           Die Einheit und der Wertebereich wird von dem sendenden Microservice bestimmt und ist abhängig von
                           der Art der Luftverschmutzung. Die Einheit sollte auch in diesem Feld enthalten sein.'
         example: {
+          event_id: 'AUT-70539',
           event_type: 'air_quality_warning',
           event_origin: 'microservice.umwelt',
           event_time: '2013-05-13 12:58:26',
@@ -143,7 +176,7 @@ components:
             pollution_level: '20 µg/m³'
           }
         }
-    daily_cultural_events:
+    daily_cultural_events_published:
       payload:
         type: object
         properties:
@@ -165,6 +198,7 @@ components:
             format: yyyy-MM-dd HH:mm:ss (ISO 8601)
             description: 'Ende der Veranstaltung.'
         example: {
+          event_id: 'AUT-70539',
           event_type: 'daily_cultural_events',
           event_origin: 'microservice.kultur',
           event_time: '2013-05-13 12:58:26',
@@ -185,7 +219,7 @@ components:
             }
           ]
         }
-    admin_message:
+    admin_message_broadcast:
       payload:
         type: object
         properties:
@@ -193,6 +227,7 @@ components:
             type: string
             description: 'Inhalt der Nachricht.'
         example: {
+          event_id: 'AUT-70539',
           event_type: 'admin_message',
           event_origin: 'system.admin',
           event_time: '2013-05-13 12:58:26',
@@ -223,6 +258,7 @@ components:
             type: string
             description: 'Adresse.'
         example: {
+          event_id: 'AUT-70539',
           event_type: 'customer_created',
           event_origin: 'microservice.authentifizierung',
           event_time: '2013-05-13 12:58:26',
@@ -256,6 +292,7 @@ components:
             format: email
             description: 'Email.'
         example: {
+          event_id: 'AUT-70539',
           event_type: 'customer_authorized',
           event_origin: 'microservice.authentifizierung',
           event_time: '2013-05-13 12:58:26',
@@ -286,6 +323,7 @@ components:
             format: email
             description: 'Email des gelöschten Benutzers.'
         example: {
+          event_id: 'AUT-70539',
           event_type: 'customer_authorized',
           event_origin: 'microservice.authentifizierung',
           event_time: '2013-05-13 12:58:26',
