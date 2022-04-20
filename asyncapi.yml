@@ -23,17 +23,17 @@ channels:
     subscribe:
       message:
         $ref: '#/components/messages/error_event'
-  air_quality_warning:
+  air_quality_warning_issued:
     description: 'Dieses Event wird gesendet, wenn eine Warnung zur Luftverschmutzung abgegeben wurde.'
     subscribe:
       message:
         $ref: '#/components/messages/air_quality_warning_issued'
-  daily_cultural_events:
+  daily_cultural_events_published:
     description: 'Dieses Event wird gesendet, wenn die täglichen kulturellen Veranstaltungen feststehen.'
     subscribe:
       message:
         $ref: '#/components/messages/daily_cultural_events_published'
-  admin_message:
+  admin_message_broadcast:
     description: 'Dieses Event wird gesendet, wenn ein Systemadministrator eine Nachricht an alle Microservices sendet.
                   Das "event_origin"-Feld des Event-Wrappers kann bei diesem Event ignoriert werden.'
     subscribe:
