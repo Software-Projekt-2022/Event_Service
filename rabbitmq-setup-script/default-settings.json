@@ -1,25 +1,6 @@
 {
     "authentifizierung":[
         {
-            "from": "authentifizierung",
-            "event_types":[
-                "breaking_news_created",
-                "air_quality_warning_issued",
-                "daily_cultural_events_published",
-                "admin_message_broadcast",
-                "customer_created",
-                "customer_authorized",
-                "customer_deleted",
-                "contract_deleted",
-                "contract_received",
-                "crew_member_created",
-                "crew_member_removed",
-                "health_expert_created",
-                "health_expert_removed",
-                "cultural_event_started"
-            ]
-        },
-        {
             "from": "umwelt",
             "event_types":[
                 "breaking_news_created",
@@ -137,25 +118,6 @@
     "umwelt":[
         {
             "from": "authentifizierung",
-            "event_types":[
-                "breaking_news_created",
-                "air_quality_warning_issued",
-                "daily_cultural_events_published",
-                "admin_message_broadcast",
-                "customer_created",
-                "customer_authorized",
-                "customer_deleted",
-                "contract_deleted",
-                "contract_received",
-                "crew_member_created",
-                "crew_member_removed",
-                "health_expert_created",
-                "health_expert_removed",
-                "cultural_event_started"
-            ]
-        },
-        {
-            "from": "umwelt",
             "event_types":[
                 "breaking_news_created",
                 "air_quality_warning_issued",
@@ -309,25 +271,6 @@
             ]
         },
         {
-            "from": "gesundheitswesen",
-            "event_types":[
-                "breaking_news_created",
-                "air_quality_warning_issued",
-                "daily_cultural_events_published",
-                "admin_message_broadcast",
-                "customer_created",
-                "customer_authorized",
-                "customer_deleted",
-                "contract_deleted",
-                "contract_received",
-                "crew_member_created",
-                "crew_member_removed",
-                "health_expert_created",
-                "health_expert_removed",
-                "cultural_event_started"
-            ]
-        },
-        {
             "from": "kultur",
             "event_types":[
                 "breaking_news_created",
@@ -445,25 +388,6 @@
         },
         {
             "from": "gesundheitswesen",
-            "event_types":[
-                "breaking_news_created",
-                "air_quality_warning_issued",
-                "daily_cultural_events_published",
-                "admin_message_broadcast",
-                "customer_created",
-                "customer_authorized",
-                "customer_deleted",
-                "contract_deleted",
-                "contract_received",
-                "crew_member_created",
-                "crew_member_removed",
-                "health_expert_created",
-                "health_expert_removed",
-                "cultural_event_started"
-            ]
-        },
-        {
-            "from": "kultur",
             "event_types":[
                 "breaking_news_created",
                 "air_quality_warning_issued",
@@ -617,25 +541,6 @@
             ]
         },
         {
-            "from": "unternehmensregister",
-            "event_types":[
-                "breaking_news_created",
-                "air_quality_warning_issued",
-                "daily_cultural_events_published",
-                "admin_message_broadcast",
-                "customer_created",
-                "customer_authorized",
-                "customer_deleted",
-                "contract_deleted",
-                "contract_received",
-                "crew_member_created",
-                "crew_member_removed",
-                "health_expert_created",
-                "health_expert_removed",
-                "cultural_event_started"
-            ]
-        },
-        {
             "from": "verkehr",
             "event_types":[
                 "breaking_news_created",
@@ -771,25 +676,6 @@
             ]
         },
         {
-            "from": "verkehr",
-            "event_types":[
-                "breaking_news_created",
-                "air_quality_warning_issued",
-                "daily_cultural_events_published",
-                "admin_message_broadcast",
-                "customer_created",
-                "customer_authorized",
-                "customer_deleted",
-                "contract_deleted",
-                "contract_received",
-                "crew_member_created",
-                "crew_member_removed",
-                "health_expert_created",
-                "health_expert_removed",
-                "cultural_event_started"
-            ]
-        },
-        {
             "from": "landing_page",
             "event_types":[
                 "breaking_news_created",
@@ -907,25 +793,6 @@
         },
         {
             "from": "verkehr",
-            "event_types":[
-                "breaking_news_created",
-                "air_quality_warning_issued",
-                "daily_cultural_events_published",
-                "admin_message_broadcast",
-                "customer_created",
-                "customer_authorized",
-                "customer_deleted",
-                "contract_deleted",
-                "contract_received",
-                "crew_member_created",
-                "crew_member_removed",
-                "health_expert_created",
-                "health_expert_removed",
-                "cultural_event_started"
-            ]
-        },
-        {
-            "from": "landing_page",
             "event_types":[
                 "breaking_news_created",
                 "air_quality_warning_issued",
