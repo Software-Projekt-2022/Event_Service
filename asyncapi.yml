@@ -109,7 +109,7 @@ components:
                           und kann von empfangenden Microservices verwendet werden, um den Absender des Events zu erkennen.'
           event_time:
             type: string
-            format: yyyy-MM-dd HH:mm:ss (ISO 8601)
+            format: ISO 8601 date and time
             description: Zeitpunkt der Eilmeldung, an dem diese ursprünglich erstellt worden ist. (Falls verspätete Zustellung.)
           content:
             type: object
@@ -125,7 +125,7 @@ components:
           event_id: 'AUT-70539',
           event_type: 'breaking_news_created',
           event_origin: 'microservice.krankenhaus',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: {
             message: 'Das ist eine Eilmeldung'
           }
@@ -137,12 +137,12 @@ components:
           event_id: 'KRA-70539',
           event_type: 'error_event',
           event_origin: 'microservice.krankenhaus',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: {
             event_id: 'UMW-64376',
             event_type: 'breaking_news_created',
             event_origin: 'microservice.umwelt',
-            event_time: '2013-05-13 12:58:26',
+            event_time: '2013-05-13T12:58:26Z',
             content: {
               messaggge: 57
             }
@@ -169,7 +169,7 @@ components:
           event_id: 'AUT-70539',
           event_type: 'air_quality_warning_issued',
           event_origin: 'microservice.umwelt',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: {
             message: 'Achtung, es liegt viel Feinstaub in der Luft!',
             pollution_type: 'Feinstaub',
@@ -191,31 +191,31 @@ components:
             description: 'Adresse der Veranstaltung.'
           time_start:
             type: string
-            format: yyyy-MM-dd HH:mm:ss (ISO 8601)
+            format: ISO 8601 date and time
             description: 'Start der Veranstaltung.'
           time_end:
             type: string
-            format: yyyy-MM-dd HH:mm:ss (ISO 8601)
+            format: ISO 8601 date and time
             description: 'Ende der Veranstaltung.'
         example: {
           event_id: 'AUT-70539',
           event_type: 'daily_cultural_events_published',
           event_origin: 'microservice.kultur',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: [
             {
               name: 'Angel-Turnier',
               location: 'Park',
               address: 'Hauptstr. 123',
-              time_start: '2022-05-13 12:00:00',
-              time_end: '2022-05-13 18:00:00'
+              time_start: '2022-05-13T12:00:00Z',
+              time_end: '2022-05-13T18:00:00Z'
             },
             {
               name: 'Insektenfang-Turnier',
               location: 'Park',
               address: 'Hauptstr. 123',
-              time_start: '2022-05-13 12:00:00',
-              time_end: '2022-05-13 18:00:00'
+              time_start: '2022-05-13T12:00:00Z',
+              time_end: '2022-05-13T18:00:00Z'
             }
           ]
         }
@@ -230,7 +230,7 @@ components:
           event_id: 'AUT-70539',
           event_type: 'admin_message_broadcast',
           event_origin: 'system.admin',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: {
             message: 'Das ist eine Nachricht vom Admin :)'
           }
@@ -252,7 +252,7 @@ components:
             description: 'Email'
           date_of_birth:
             type: string
-            format: YYYY-MM-DD (iso 8601)
+            format: YYYY-MM-DD (iso 8601 date)
             description: 'Geburtsdatum.'
           address:
             type: string
@@ -261,7 +261,7 @@ components:
           event_id: 'AUT-70539',
           event_type: 'customer_created',
           event_origin: 'microservice.authentifizierung',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: {
             first_name: 'Uwe',
             last_name: 'Uwe',
@@ -295,7 +295,7 @@ components:
           event_id: 'AUT-70539',
           event_type: 'customer_authorized',
           event_origin: 'microservice.authentifizierung',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: {
             id: '70531',
             session: 'abcdefghijklmnopqrstuvwxyz',
@@ -326,7 +326,7 @@ components:
           event_id: 'AUT-70539',
           event_type: 'customer_authorized',
           event_origin: 'microservice.authentifizierung',
-          event_time: '2013-05-13 12:58:26',
+          event_time: '2013-05-13T12:58:26Z',
           content: {
             id: '70531',
             first_name: 'Uwe',
