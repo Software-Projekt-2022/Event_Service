@@ -167,7 +167,7 @@ components:
                           der Art der Luftverschmutzung. Die Einheit sollte auch in diesem Feld enthalten sein.'
         example: {
           event_id: 'AUT-70539',
-          event_type: 'air_quality_warning',
+          event_type: 'air_quality_warning_issued',
           event_origin: 'microservice.umwelt',
           event_time: '2013-05-13 12:58:26',
           content: {
@@ -199,7 +199,7 @@ components:
             description: 'Ende der Veranstaltung.'
         example: {
           event_id: 'AUT-70539',
-          event_type: 'daily_cultural_events',
+          event_type: 'daily_cultural_events_published',
           event_origin: 'microservice.kultur',
           event_time: '2013-05-13 12:58:26',
           content: [
@@ -228,7 +228,7 @@ components:
             description: 'Inhalt der Nachricht.'
         example: {
           event_id: 'AUT-70539',
-          event_type: 'admin_message',
+          event_type: 'admin_message_broadcast',
           event_origin: 'system.admin',
           event_time: '2013-05-13 12:58:26',
           content: {
