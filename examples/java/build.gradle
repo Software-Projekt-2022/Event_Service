@@ -1,0 +1,32 @@
+
+plugins
+{
+    id 'application'
+}
+
+repositories
+{
+	mavenCentral()
+}
+
+dependencies
+{
+	implementation 'com.rabbitmq:amqp-client:5.14.2'
+	implementation 'com.google.code.gson:gson:2.9.0'
+}
+
+application
+{
+    mainClass = 'Example'
+}
+
+sourceSets
+{
+	main
+	{
+		java
+		{
+			srcDirs = ['src']
+		}
+	}
+}
