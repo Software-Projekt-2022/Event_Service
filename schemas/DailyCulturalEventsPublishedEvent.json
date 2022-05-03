@@ -1,0 +1,75 @@
+{
+    "$schema":"https://json-schema.org/draft/2019-09/schema",
+    "title":"Daily Cultural Events Published Event",
+    "description":"Dieses Event wird gesendet, wenn die täglichen kulturellen Veranstaltungen feststehen.",
+    "type":"object",
+    "properties":{
+        "event_id":{
+            "type":"string",
+            "description":"Enthält die ID des Events. Jedes Event muss eine einzigartige ID haben. Um zu gewährleisten, dass jedes Event-ID auch über alle Microservices einzig ist, sollte jede ID einen Präfix haben, der für jeden Microservice einzigartig ist, wie bspw. eine Abkürzung des Namens."
+        },
+        "event_type":{
+            "type":"string",
+            "description":"Enthält die Art des Events. Dieses Feld muss den Namen eines Events enthalten und kann von empfangenden Microservices verwendet werden, um die Art des Events zu erkennen."
+        },
+        "event_origin":{
+            "type":"string",
+            "description":"Enthält den Absender des Events. Dieses Feld muss den Namen eines Microservices enthalten (z. B. \"microservice.krankenhaus\") und kann von empfangenden Microservices verwendet werden, um den Absender des Events zu erkennen."
+        },
+        "event_time":{
+            "type":"string",
+            "format":"date-time",
+            "description":"Zeitpunkt der Eilmeldung, an dem diese ursprünglich erstellt worden ist. (Falls verspätete Zustellung.)"
+        },
+        "content":{
+            "type":"array",
+            "description":"Beinhaltet das eigentliche Event.",
+            "items":{
+                "$ref":"#/$defs/culturalEvent"
+            }
+        }
+    },
+    "required":[
+        "event_id",
+        "event_type",
+        "event_origin",
+        "event_time",
+        "content"
+    ],
+    "$defs":{
+        "culturalEvent":{
+            "type":"object",
+            "properties":{
+                "name":{
+                    "type":"string",
+                    "description":"Name der Veranstaltung."
+                },
+                "location":{
+                    "type":"string",
+                    "description":"Name des Ortes der Veranstaltung."
+                },
+                "address":{
+                    "type":"string",
+                    "description":"Adresse der Veranstaltung."
+                },
+                "time_start":{
+                    "type":"string",
+                    "format":"date-time",
+                    "description":"Start der Veranstaltung."
+                },
+                "time_end":{
+                    "type":"string",
+                    "format":"date-time",
+                    "description":"Ende der Veranstaltung."
+                }
+            },
+            "required":[
+                "name",
+                "location",
+                "address",
+                "time_start",
+				"time_end"
+            ]
+        }
+    }
+}

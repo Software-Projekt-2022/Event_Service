@@ -1,0 +1,55 @@
+{
+    "$schema":"https://json-schema.org/draft/2019-09/schema",
+    "title":"Air Quality Warning Issued Event",
+    "description":"Dieses Event wird gesendet, wenn eine Warnung zur Luftverschmutzung abgegeben wurde.",
+    "type":"object",
+    "properties":{
+        "event_id":{
+            "type":"string",
+            "description":"Enthält die ID des Events. Jedes Event muss eine einzigartige ID haben. Um zu gewährleisten, dass jedes Event-ID auch über alle Microservices einzig ist, sollte jede ID einen Präfix haben, der für jeden Microservice einzigartig ist, wie bspw. eine Abkürzung des Namens."
+        },
+        "event_type":{
+            "type":"string",
+            "description":"Enthält die Art des Events. Dieses Feld muss den Namen eines Events enthalten und kann von empfangenden Microservices verwendet werden, um die Art des Events zu erkennen."
+        },
+        "event_origin":{
+            "type":"string",
+            "description":"Enthält den Absender des Events. Dieses Feld muss den Namen eines Microservices enthalten (z. B. \"microservice.krankenhaus\") und kann von empfangenden Microservices verwendet werden, um den Absender des Events zu erkennen."
+        },
+        "event_time":{
+            "type":"string",
+            "format":"date-time",
+            "description":"Zeitpunkt der Eilmeldung, an dem diese ursprünglich erstellt worden ist. (Falls verspätete Zustellung.)"
+        },
+        "content":{
+            "type":"object",
+            "description":"Beinhaltet das eigentliche Event.",
+            "properties":{
+                "message":{
+                    "type":"string",
+                    "description":"Die Nachricht, die bei der Warnung angezeigt wird."
+                },
+                "pollution_type":{
+                    "type":"string",
+                    "description":"Enthält die Art der Luftverschmutzung und wird von dem sendenden Microservice bestimmt. Diese dient hauptsächlich zur programmatischen bestimmung der Art der Luftverschmutzung. Beispiel: Pollen oder Feinstaub."
+                },
+                "pollution_level":{
+                    "type":"string",
+                    "description":"Grad der Luftverschmutzung. Die Einheit und der Wertebereich wird von dem sendenden Microservice bestimmt und ist abhängig von der Art der Luftverschmutzung. Die Einheit sollte auch in diesem Feld enthalten sein."
+                }
+            },
+            "required":[
+                "message",
+                "pollution_type",
+                "pollution_level"
+            ]
+        }
+    },
+    "required":[
+        "event_id",
+        "event_type",
+        "event_origin",
+        "event_time",
+        "content"
+    ]
+}
