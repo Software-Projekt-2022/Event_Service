@@ -14,7 +14,7 @@ COPY rabbitmq-setup-script/default-settings.json ./
 
 COPY .github/scripts/run.sh ./
 
-RUN nmp i
+RUN npm i
 
 ENTRYPOINT [ "bin/bash run.sh" ]
 
