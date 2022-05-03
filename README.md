@@ -14,8 +14,9 @@ In dem Ordner `examples` befinden sich Anleitungen,
 wie man als Microservice mit dem Event-System umgehen kann.
 Die Beispiele sind nach Sprache sortiert und enthalten jeweils ein ausführbares Beispielprogramm.
 
-Im Moment gibt es nur ein Beispiel für JavaScript mit Node.js.
-Bald werden evtl. Beispiele für folgende Sprachen hinzugefügt:
+Im Moment gibt es Beispiele für die folgenden Sprachen:
 
+* JavaScript mit Node.js
 * Java
-* Python
+
+Evtl. wird noch ein Beispiel für Python hinzugefügt.
