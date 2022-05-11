@@ -6,15 +6,10 @@ FROM node:18-alpine
 
 WORKDIR /script
 
-COPY / ./
 COPY rabbitmq-setup-script/* ./
 COPY rabbitmq.json ./
 
-COPY rabbitmq-setup-script/rabbitmq-setup-script.js ./
-
-COPY rabbitmq-setup-script/default-settings.json ./
-
-COPY .github/scripts/run.sh ./
+COPY docker-scripts/run.sh ./
 
 RUN npm i
 
