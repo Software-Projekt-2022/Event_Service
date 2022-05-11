@@ -1,0 +1,61 @@
+{
+    "$schema":"https://json-schema.org/draft/2019-09/schema",
+    "title":"Customer Deleted Event",
+    "description":"Dieses Event wird gesendet, wenn ein Benutzer aus dem System gelöscht wird.",
+    "type":"object",
+    "properties":{
+        "event_id":{
+            "type":"string",
+            "description":"Enthält die ID des Events. Jedes Event muss eine einzigartige ID haben. Um zu gewährleisten, dass jedes Event-ID auch über alle Microservices einzig ist, sollte jede ID einen Präfix haben, der für jeden Microservice einzigartig ist, wie bspw. eine Abkürzung des Namens."
+        },
+        "event_type":{
+            "type":"string",
+            "description":"Enthält die Art des Events. Dieses Feld muss den Namen eines Events enthalten und kann von empfangenden Microservices verwendet werden, um die Art des Events zu erkennen."
+        },
+        "event_origin":{
+            "type":"string",
+            "description":"Enthält den Absender des Events. Dieses Feld muss den Namen eines Microservices enthalten (z. B. \"microservice.krankenhaus\") und kann von empfangenden Microservices verwendet werden, um den Absender des Events zu erkennen."
+        },
+        "event_time":{
+            "type":"string",
+            "format":"date-time",
+            "description":"Zeitpunkt der Eilmeldung, an dem diese ursprünglich erstellt worden ist. (Falls verspätete Zustellung.)"
+        },
+        "content":{
+            "type":"object",
+            "description":"Beinhaltet das eigentliche Event.",
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Ehemalige ID des gelöschten Benutzers in der Datenbank."
+                },
+                "first_name":{
+                    "type":"string",
+                    "description":"Vorname des gelöschten Benutzers."
+                },
+                "last_name":{
+                    "type":"string",
+                    "description":"Nachname des gelöschten Benutzers."
+                },
+                "email":{
+                    "type":"string",
+                    "format":"email",
+                    "description":"Email des gelöschten Benutzers."
+                }
+            },
+            "required":[
+                "id",
+                "first_name",
+                "last_name",
+                "email"
+            ]
+        }
+    },
+    "required":[
+        "event_id",
+        "event_type",
+        "event_origin",
+        "event_time",
+        "content"
+    ]
+}

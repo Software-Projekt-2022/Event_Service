@@ -93,9 +93,9 @@ components:
             type: string
             description: 'Enthält die ID des Events.
                           Jedes Event muss eine einzigartige ID haben.
-                          Um zu gewährleisten, dass jedes Event-ID auch über alle Microservices einzig ist,
+                          Um zu gewährleisten, dass jede Event-ID auch über alle Microservices einzigartig ist,
                           sollte jede ID einen Präfix haben, der für jeden Microservice einzigartig ist,
-                          wie bspw. ein Abkürzung des Namens.'
+                          wie bspw. eine Abkürzung des Namens.'
           event_type:
             type: string
             description: 'Enthält die Art des Events.
@@ -244,7 +244,6 @@ components:
             description: 'Vorname.'
           last_name:
             type: string
-            format: email
             description: 'Nachname.'
           email:
             type: string
@@ -285,7 +284,6 @@ components:
             description: 'Vorname.'
           last_name:
             type: string
-            format: email
             description: 'Nachname.'
           email:
             type: string
@@ -316,7 +314,6 @@ components:
             description: 'Vorname des gelöschten Benutzers.'
           last_name:
             type: string
-            format: email
             description: 'Nachname des gelöschten Benutzers.'
           email:
             type: string
