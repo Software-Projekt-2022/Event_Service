@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: "registry.digitalocean.com/cybercityregistry"
-  IMAGE_NAME: "rabbitmq-setup"
+  IMAGE_NAME: "rabbitmq-setup:latest"
 
 #jobs to execute
 jobs:
@@ -53,7 +53,5 @@ jobs:
           script: |
             #Stop running container
             docker-compose stop
-            #Remove old container
-            docker rm $(echo $IMAGE_NAME)
             #Start
-            docker-compose up
+            docker-compose up -d --force-recreate
