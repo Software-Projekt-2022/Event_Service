@@ -53,5 +53,7 @@ jobs:
           script: |
             #Stop running container
             docker-compose stop
+            #Pull
+            docker-compose pull
             #Start
             docker-compose up -d --force-recreate
