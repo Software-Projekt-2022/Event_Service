@@ -14,7 +14,20 @@ dependencies
 	implementation 'com.rabbitmq:amqp-client:5.14.2'
 	implementation 'com.google.code.gson:gson:2.9.0'
 }
+```
 
+Wer mit Maven arbeiten möchte, muss die folgenden Dependencies einbinden:
+```xml
+<dependency>
+    <groupId>com.rabbitmq</groupId>
+    <artifactId>amqp-client</artifactId>
+    <version>5.14.2</version>
+</dependency>
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.9.0</version>
+</dependency>
 ```
 
 Zuerst werden Konstanten definiert, die später nützlich sind.
