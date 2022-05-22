@@ -36,7 +36,7 @@ if(args.length == 0)
 
 try
 {
-    //var input_file = require(args[0]);
+    var input_file = require(args[0]);
 }
 catch(e)
 {
