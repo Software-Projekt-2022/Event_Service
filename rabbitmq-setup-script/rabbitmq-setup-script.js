@@ -50,7 +50,7 @@ catch(e)
 }
 
 
-amqp.connect('amqp://localhost', (conn_err, connection) =>
+amqp.connect('amqp://rabbitmq', (conn_err, connection) =>
 {
     if (conn_err)
     {
