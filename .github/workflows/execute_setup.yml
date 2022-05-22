@@ -36,6 +36,17 @@ jobs:
 
       - name: Push image to DigitalOcean Container Registry
         run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME)
+      
+      - name: Deploy script
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: -azvr --delete
+          path: conf/
+          remote_path: ~/rabbitmqsetup
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_user: ${{ secrets.SSH_USER }}
+          remote_key: ${{ secrets.SSH_KEY}}
+          remote_key_pass: ${{ secrets.SSH_PASSPHRASE }}
 
   deploy:
     runs-on: ubuntu-20.04
