@@ -36,13 +36,19 @@ if(args.length == 0)
 
 try
 {
-    var input_file = require(`./${args[0]}`);
+    //var input_file = require(args[0]);
 }
-catch
+catch(e)
 {
-    console.log(`Could not open file "${args[0]}". File path must be relative to this directory.`);
+    console.log(e);
+    console.log('Could not open file ');
+    
+    console.log(args[0]);
+    
+    console.log('Could not open file ',args[0],'. File path must be relative to this directory.');
     process.exit(-1);
 }
+
 
 amqp.connect('amqp://localhost', (conn_err, connection) =>
 {
