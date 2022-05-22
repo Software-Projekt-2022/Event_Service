@@ -7,7 +7,7 @@ FROM node:16
 WORKDIR /
 
 COPY rabbitmq-setup-script/* ./
-COPY rabbitmq.json ./
+COPY conf/*  ./
 
 COPY docker-scripts/run.sh ./
 
