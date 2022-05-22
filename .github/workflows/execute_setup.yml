@@ -42,18 +42,14 @@ jobs:
     needs: build_and_push
 
     steps:
-      - name: Deploy to Digital Ocean droplet via SSH actions/checkout
-        uses: appleboy/ssh-action@v0.1.3
+      - name: Start Docker
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME}}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          envs: IMAGE_NAME,REGISTRY,{{ secrets.DO_ACCESS }},GITHUB_SHA
+          key: ${{ secrets.SSH_KEY}}
           script: |
-            #Stop running container
-            docker-compose stop
-            #Pull
+            cd ~/docker
             docker-compose pull
-            #Start
             docker-compose up -d --force-recreate
