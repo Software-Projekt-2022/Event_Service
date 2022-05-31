@@ -1,7 +1,7 @@
 asyncapi: 2.3.0
 info:
   title: 'CyberCity Event Bus'
-  version: 0.0.3
+  version: 0.0.4
   description: 'Dieser Service kümmert sich um den Kommunikationsweg der einzelnen Microservices.
                 Umgesetzt wird diese Funktionalität mit RabbitMQ.
                 Ein Event wird immer von einem Event-Wrapper umschlossen.
@@ -39,21 +39,21 @@ channels:
     subscribe:
       message:
         $ref: '#/components/messages/admin_message_broadcast'
-  customer_created:
+  account_created:
     description: 'Dieses Event wird gesendet, wenn ein Benutzer im System registriert wurde.'
     subscribe:
       message:
-        $ref: '#/components/messages/customer_created'
-  customer_authorized:
+        $ref: '#/components/messages/account_created'
+  account_authorized:
     description: 'Dieses Event wird gesendet, wenn ein Benutzer sich bei dem Authentifizierungs-Microservice angemeldet hat.'
     subscribe:
       message:
-        $ref: '#/components/messages/customer_authorized'
-  customer_deleted:
+        $ref: '#/components/messages/account_authorized'
+  account_deleted:
     description: 'Dieses Event wird gesendet, wenn ein Benutzer aus dem System gelöscht wird.'
     subscribe:
       message:
-        $ref: '#/components/messages/customer_deleted'
+        $ref: '#/components/messages/account_deleted'
   contract_deleted:
     subscribe:
       message:
@@ -235,99 +235,111 @@ components:
             message: 'Das ist eine Nachricht vom Admin :)'
           }
         }
-    customer_created:
+    account_created:
       payload:
         type: object
         properties:
+          account_id:
+            type: integer
+            description: 'Account-ID.'
+          email:
+            type: string
+            format: email
+            description: 'Email.'
           first_name:
             type: string
             description: 'Vorname.'
           last_name:
             type: string
             description: 'Nachname.'
-          email:
-            type: string
-            format: email
-            description: 'Email'
           date_of_birth:
             type: string
             format: YYYY-MM-DD (iso 8601 date)
             description: 'Geburtsdatum.'
-          address:
+          street:
             type: string
-            description: 'Adresse.'
+            description: 'Straße.'
+          street2:
+            type: string
+            description: 'Straßenzusatz.'
+          house_number:
+            type: string
+            description: 'Hausnummer.'
+          registration_date:
+            type: string
+            format: YYYY-MM-DD (iso 8601 date)
+            description: 'Registrierungsdatum.'
         example: {
           event_id: 'AUT-70539',
-          event_type: 'customer_created',
+          event_type: 'account_created',
           event_origin: 'microservice.authentifizierung',
           event_time: '2013-05-13T12:58:26Z',
           content: {
+            account_id: 2,
+            email: 'uwe@email.de',
             first_name: 'Uwe',
             last_name: 'Uwe',
-            email: 'uwe@email.de',
             date_of_birth: '2013-05-13',
-            address: 'Hauptstr. 123'
+            street: 'Hauptstr.',
+            street2: '',
+            house_number: '123',
+            registration_date: '2012-05-13'
           }
         }
-    customer_authorized:
+    account_authorized:
       payload:
         type: object
         properties:
           id:
             type: string
             description: 'ID des Benutzers in der Datenbank. Diese kann für Queries verwendet werden.'
-          session:
-            type: string
-            description: 'Session-Token des angeldeten Benutzers.'
-          first_name:
-            type: string
-            description: 'Vorname.'
-          last_name:
-            type: string
-            description: 'Nachname.'
           email:
             type: string
             format: email
             description: 'Email.'
+          session:
+            description: 'Session-Token des Benutzers.'
+            type: object
+            properties:
+              expiresIn:
+                type: string
+                description: 'Gültigkeitsdauer.'
+              jwt:
+                type: string
+                format: JWT
+                description: 'JWT im Format: JWT &lt;Token&gt;.'
         example: {
           event_id: 'AUT-70539',
-          event_type: 'customer_authorized',
+          event_type: 'account_authorized',
           event_origin: 'microservice.authentifizierung',
           event_time: '2013-05-13T12:58:26Z',
           content: {
             id: '70531',
-            session: 'abcdefghijklmnopqrstuvwxyz',
-            first_name: 'Uwe',
-            last_name: 'Uwe',
-            email: 'uwe@email.de'
+            email: 'uwe@email.de',
+            session: {
+              expiresIn: '1h',
+              jwt: 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzY290Y2guaW8iLCJleHAiOjEzMDA4MTkzODAsIm5hbWUiOiJDaHJpcyBTZXZpbGxlamEiLCJhZG1pbiI6dHJ1ZX0.03f329983b86f7d9a9f5fef85305880101d5e302afafa20154d094b229f75773'
+            }
           }
         }
-    customer_deleted:
+    account_deleted:
       payload:
         type: object
         properties:
           id:
-            type: string
+            type: integer
             description: 'Ehemalige ID des gelöschten Benutzers in der Datenbank.'
-          first_name:
-            type: string
-            description: 'Vorname des gelöschten Benutzers.'
-          last_name:
-            type: string
-            description: 'Nachname des gelöschten Benutzers.'
           email:
             type: string
             format: email
             description: 'Email des gelöschten Benutzers.'
         example: {
           event_id: 'AUT-70539',
-          event_type: 'customer_authorized',
+          event_type: 'account_deleted',
           event_origin: 'microservice.authentifizierung',
           event_time: '2013-05-13T12:58:26Z',
           content: {
             id: '70531',
-            first_name: 'Uwe',
-            last_name: 'Uwe',
             email: 'uwe@email.de'
           }
         }
