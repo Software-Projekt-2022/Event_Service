@@ -1,7 +1,7 @@
 {
     "$schema":"https://json-schema.org/draft/2019-09/schema",
-    "title":"Customer Authorized Event",
-    "description":"Dieses Event wird gesendet, wenn ein Benutzer sich bei dem Authentifizierungs-Microservice angemeldet hat.",
+    "title":"Account Deleted Event",
+    "description":"Dieses Event wird gesendet, wenn ein Benutzer aus dem System gelöscht wird.",
     "type":"object",
     "properties":{
         "event_id":{
@@ -27,31 +27,16 @@
             "properties":{
                 "id":{
                     "type":"string",
-                    "description":"ID des Benutzers in der Datenbank. Diese kann für Queries verwendet werden."
-                },
-                "session":{
-                    "type":"string",
-                    "description":"Session-Token des angeldeten Benutzers."
-                },
-                "first_name":{
-                    "type":"string",
-                    "description":"Vorname."
-                },
-                "last_name":{
-                    "type":"string",
-                    "description":"Nachname."
+                    "description":"Ehemalige ID des gelöschten Benutzers in der Datenbank."
                 },
                 "email":{
                     "type":"string",
                     "format":"email",
-                    "description":"Email."
+                    "description":"Email des gelöschten Benutzers."
                 }
             },
             "required":[
                 "id",
-                "session",
-                "first_name",
-                "last_name",
                 "email"
             ]
         }

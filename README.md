@@ -19,8 +19,6 @@ Im Moment gibt es Beispiele für die folgenden Sprachen:
 * JavaScript mit Node.js
 * Java
 
-Evtl. wird noch ein Beispiel für Python hinzugefügt.
-
 ## Event JSON Schemas
 
 Im Ordner `schemas` befinden sich [JSON-Schemas](https://json-schema.org/)

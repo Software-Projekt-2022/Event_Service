@@ -1,7 +1,7 @@
 {
     "$schema":"https://json-schema.org/draft/2019-09/schema",
-    "title":"Customer Deleted Event",
-    "description":"Dieses Event wird gesendet, wenn ein Benutzer aus dem System gelöscht wird.",
+    "title":"Account Created Event",
+    "description":"Dieses Event wird gesendet, wenn ein Benutzer im System registriert wurde.",
     "type":"object",
     "properties":{
         "event_id":{
@@ -25,29 +25,56 @@
             "type":"object",
             "description":"Beinhaltet das eigentliche Event.",
             "properties":{
-                "id":{
-                    "type":"string",
-                    "description":"Ehemalige ID des gelöschten Benutzers in der Datenbank."
-                },
-                "first_name":{
-                    "type":"string",
-                    "description":"Vorname des gelöschten Benutzers."
-                },
-                "last_name":{
-                    "type":"string",
-                    "description":"Nachname des gelöschten Benutzers."
+                "account_id":{
+                    "type":"integer",
+                    "description":"Account-ID."
                 },
                 "email":{
                     "type":"string",
                     "format":"email",
-                    "description":"Email des gelöschten Benutzers."
+                    "description":"Email."
+                },
+                "first_name":{
+                    "type":"string",
+                    "description":"Vorname."
+                },
+                "last_name":{
+                    "type":"string",
+                    "description":"Nachname."
+                },
+                "date_of_birth":{
+                    "type":"string",
+                    "format":"date",
+                    "description":"Geburtsdatum."
+                },
+                "street":{
+                    "type":"string",
+                    "description":"Straße."
+                },
+                "street2":{
+                    "type":"string",
+                    "description":"Straßenzusatz."
+                },
+                "house_number":{
+                    "type":"string",
+                    "description":"Hausnummer."
+                },
+                "registration_date":{
+                    "type":"string",
+                    "format":"date",
+                    "description":"Registrierungsdatum."
                 }
             },
             "required":[
-                "id",
+                "account_id",
+                "email",
                 "first_name",
                 "last_name",
-                "email"
+                "date_of_birth",
+                "street",
+                "street2",
+                "house_number",
+                "registration_date"
             ]
         }
     },
