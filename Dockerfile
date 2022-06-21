@@ -13,5 +13,5 @@ COPY docker-scripts/run.sh ./
 
 RUN npm i
 RUN chmod +rx /
-CMD [ "/bin/sh","run.sh" ]
+CMD [ "node","rabbitmq-setup-script.js", "/default-settings.json" ]
 
